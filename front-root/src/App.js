@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSpring, animated} from 'react-spring'
 import './App.css';
 
 function App() {
@@ -7,10 +8,8 @@ function App() {
   const addChars = React.useCallback((char) => setChars((prev) => [char, ...prev]), [setChars]);
 
   return (
-    <div>
-      <header className="App-header">
+    <div className="App">
         <CharGenerator chars={chars} addChars={addChars} />
-      </header>
     </div>
   )
 }
@@ -18,10 +17,13 @@ function App() {
 function CharGenerator(props) {
   const randomAreaWidth = 95;
   const randomAreaHight = 80;
-  const maxFontSize = 20
   const top = Math.random() * randomAreaHight -2;
-  const left = Math.random() * randomAreaWidth -2;
-  const fontsize = Math.random() * maxFontSize;
+  const left = Math.random() * randomAreaWidth - 2;
+  
+  const minFontSize = 5
+  const maxFontSize = 20
+  const fontSizeRatio = Math.random();
+  const fontsize = fontSizeRatio * maxFontSize + (1 - fontSizeRatio) * minFontSize;
   
   const randNumIn256 = () => (Math.round(Math.random() * 256));
 
@@ -40,13 +42,11 @@ function CharGenerator(props) {
       fontsize: fontsize,
       rgb: rgb
     });
-    console.log(rgb);
   }
   return (
     <div>
       <p className={"Title"} onKeyPress={generateChar} tabIndex={0}>Generate Charactors</p>
-      <CharCluster chars={props.chars}>
-      </CharCluster>
+      <CharCluster chars={props.chars} />
     </div>
 
   )
@@ -74,6 +74,9 @@ function CharCluster(props) {
 
 
 function Char(props) {
+  const [existing, setExisting] = React.useState(true);
+  const erase = React.useCallback(() => setExisting((prev) => !prev), [setExisting]);
+
   const style = {
     position: "absolute",
     top: `${props.top}vh`,
@@ -83,9 +86,12 @@ function Char(props) {
     margin: 0
   };
 
-  return (
-    <p style={style}>{props.char}</p>
-  )
+  if (existing) {
+    return <p style={style} onMouseOver={erase}>{props.char}</p>
+  }
+  else {
+    return false
+  }
 }
 
 export default App;
