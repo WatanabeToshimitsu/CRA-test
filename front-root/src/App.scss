@@ -22,15 +22,11 @@
 }
 
 .ThemeToggle{
-  display: flex;
+  @extend .App;
   min-height: 2vh;
-  font-family: 'Courier New', Courier, monospace;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   font-size: 0.5em;
 }
+
 .ThemeToggle__Morning{
   @extend .ThemeToggle;
   background-color: #2f2f2f;
