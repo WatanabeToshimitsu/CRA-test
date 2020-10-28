@@ -1,15 +1,12 @@
 import React from 'react';
-import { SettingContext } from './Context';
+import { ChangeSetting, SettingContext } from './SettingContext';
 import styles from './ToggleTheme.module.css';
 //import Button from '@material-ui/core';
 
-export function ToggleTheme(props) {
+export const ToggleTheme: React.FC<{onClick: ChangeSetting}> = (props) => {
     const { theme, ..._ } = React.useContext(SettingContext)    
     const newTheme = theme === 'Morning' ? 'Night' : 'Morning';
 
-
-
-    // useContext
     return (
         <button
             onClick={() => props.onClick({ theme: newTheme })}

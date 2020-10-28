@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './HowToPlay.module.css';
 
-export function HowToPlay(props) {
+export const HowToPlay: React.FC<{}> = (props) => {
     return (
         <>
             <div className={styles.Title}>How to play</div>
