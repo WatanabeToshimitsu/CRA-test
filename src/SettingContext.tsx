@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface Setting {
+type Setting = {
     theme: string;
-    red: "ff";
-    green: "ff";
-    blue: "ff";
+    red: string;
+    green: string;
+    blue: string;
     opacity: number;
     
 }

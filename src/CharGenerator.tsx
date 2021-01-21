@@ -2,7 +2,7 @@ import React from 'react';
 import { Spring } from 'react-spring/renderprops';
 import styles from './CharGenerator.module.css';
 
-interface CharParam {
+type CharParam = {
         top: number;
         left: number;
         fontsize: number;
@@ -10,19 +10,20 @@ interface CharParam {
         isExisting: boolean;
 };
 
-interface CharProf {
+type CharProf = {
     id: number;
     char: string;
     param: CharParam;
 };
 
-interface DeleteChar {
+type DeleteChar = {
     (charId: number): void;
 }
 
 type CharProfArr = Array<CharProf>;
 
-const CharGenerator: React.FC<{}> = (props) => {
+const CharGenerator: React.FC<{}> = (props) =>
+{
     const [charProfs, seCharProfs] = React.useState<CharProfArr>([]);
     const [charID, setCharID] = React.useState(0);
 
@@ -32,11 +33,11 @@ const CharGenerator: React.FC<{}> = (props) => {
         setCharID((prev) => prev + 1);
     }, [setChars, setCharID]);
     */
-    
+
     const deleteChar = React.useCallback<DeleteChar>((charId) => {
         seCharProfs((prev) => prev.filter((char) => char.id !== charId))
     }, [seCharProfs])
-    
+
     const param = calcCharParam();
 
     const generateChar = React.useCallback<(e: React.KeyboardEvent<HTMLDivElement>) => void>(e => {
@@ -52,7 +53,7 @@ const CharGenerator: React.FC<{}> = (props) => {
         });
     }
     */
-    
+
     return (
         <div>
             <div
@@ -68,8 +69,8 @@ const CharGenerator: React.FC<{}> = (props) => {
     )
 };
 
-const CharCluster: React.FC<{charProfs: CharProfArr, deleteChar: DeleteChar}> = (props) => {
-
+const CharCluster: React.FC<{ charProfs: CharProfArr, deleteChar: DeleteChar }> = (props) =>
+{
     const charList = props.charProfs.map((prof) => {
         return (
             <Char
@@ -88,11 +89,11 @@ const CharCluster: React.FC<{charProfs: CharProfArr, deleteChar: DeleteChar}> = 
 }
 
 
-const Char: React.FC<{ prof: CharProf, deleteSelf: () => void}>= (props) => {
+const Char: React.FC<{ prof: CharProf, deleteSelf: () => void }> = (props) =>
+{
     const { prof, deleteSelf } = props
     const char = prof.char === 'Enter' ? '!' : prof.char; // TODO: fix DASA code
     const { fontsize, top, left, rgb } = prof.param
-
 
     const style = {
         fontSize: `${fontsize}em`,
@@ -113,7 +114,8 @@ const Char: React.FC<{ prof: CharProf, deleteSelf: () => void}>= (props) => {
     )
 }
 
-function calcCharParam():CharParam {
+function calcCharParam(): CharParam
+{
     const randomAreaWidth = 98;
     const randomAreaHight = 95;
     const top = Math.random() * randomAreaHight;
